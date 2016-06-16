@@ -1,0 +1,23 @@
+{
+  "name": "vpn-connect",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "vpn": "vpn.applescript"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antialias/vpn-connect.git"
+  },
+  "bugs": {
+    "url": "https://github.com/antialias/vpn-connect/issues"
+  },
+  "homepage": "https://github.com/antialias/vpn-connect#readme",
+  "description": ""
+}
