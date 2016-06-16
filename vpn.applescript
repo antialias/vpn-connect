@@ -10,15 +10,10 @@ on run argv
 		tell current location of network preferences
 			
 			-- set the name of the VPN service from your Network Settings
-			set VPNService to service "1stdibs"
+			set vpn_name to system attribute "vpn_service"
 			-- determine current VPN connection status 	
-			set isConnected to connected of current configuration of VPNService
-			
-			-- if connected, then disconnect	
-			if isConnected then
-				disconnect VPNService
-				
-				
+			if (do shell script "scutil --nc status " & vpn_name) starts with "Connected" then
+				do shell script "scutil --nc stop " & vpn_name
 			else -- otherwise, connect to the VPN
 				
 				set vpnpass to do shell script "echo $(security find-generic-password -a vpn-password -s vpn-password -w)"
@@ -28,9 +23,7 @@ on run argv
 					do shell script "security add-generic-password -a vpn-password -s vpn-password -w " & vpnpass
 				end if
 				set the clipboard to vpnpass
-
-				connect VPNService
-				
+				do shell script "scutil --nc start " & vpn_name
 				-- wait 10 seconds before pasting in the password
 				delay 1
 				
@@ -43,7 +36,7 @@ on run argv
 					-- wait 10 seconds to connect	
 					delay 3
 					-- determine current VPN connection status (after providing password)
-					set nowConnected to connected of current configuration of VPNService
+					set nowConnected to (do shell script "scutil --nc status " & vpn_name) starts with "Connected"
 					
 					-- if we're now connected ...	
 					if nowConnected then
